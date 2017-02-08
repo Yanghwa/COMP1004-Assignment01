@@ -12,9 +12,32 @@ namespace COMP1004_W2017_Lesson3
 {
     public partial class CalculatorForm : Form
     {
+        //PRIVATE INSTANCE VARIABLES
+        private string _operand1;
+        private string _operand2;
+        private bool _isCalculatorClear;
+
+        //CONSTRUCTORS -------------------------
+
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
         public CalculatorForm()
         {
             InitializeComponent();
+
+            this._clearCalculator();
+        }
+
+        /// <summary>
+        /// This method clears the calculator app and resets the variables
+        /// </summary>
+        private void _clearCalculator()
+        {
+            this._operand1 = "";
+            this._operand2 = "";
+            this._isCalculatorClear = true;
+            ResultTextBox.Text = "0";
         }
 
         /// <summary>
@@ -22,11 +45,28 @@ namespace COMP1004_W2017_Lesson3
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void CalculatorButton_Click(object sender, EventArgs e)
+        private void _calculatorButton_Click(object sender, EventArgs e)
         {
             Button CalculatorButton = sender as Button;
 
-            ResultTextBox.Text += CalculatorButton.Text;
+            switch (CalculatorButton.Tag as String)
+            {
+                case "Operand":
+                    if(this._isCalculatorClear)
+                    {
+                        ResultTextBox.Text = CalculatorButton.Text;
+                        this._isCalculatorClear = false;
+                    }
+                    else
+                    {
+                        ResultTextBox.Text += CalculatorButton.Text;
+                    }
+                    break;
+                case "Operator":
+                    break;
+                case "Other":
+                    break;
+            }
         }
     }
 }
